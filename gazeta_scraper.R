@@ -1,5 +1,5 @@
 # Scraping Gazeta 
-# January 2025
+# June 2025
 
 # Load packages and set working directory  -----------------------------------------------------
 
