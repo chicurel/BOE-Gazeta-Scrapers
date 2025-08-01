@@ -4,9 +4,9 @@ A web scraper written in **R** for extracting and processing content from the [B
 
 ## Features
 
-- Extract BOE data by keyword, date, or section  
-- Download and parse BOE publications  
-- Output results in CSV format  
+- Extracts metadata (title, date, references, document links) from BOE search result pages
+- Downloads linked **PDF**, **XML**, and **HTML** files
+- Outputs metadata to structured CSV
 - Two scraper modules included:
   - **BOE Scraper (1960–Present)** — from the official digital BOE
   - **Gazette Historical Scraper** — for older historical BOE archives
@@ -29,6 +29,10 @@ A web scraper written in **R** for extracting and processing content from the [B
 
 
 ## Requirements
+- You must create the following folder structure in your working directory:
+  - output
+  - files
+    
 - Required R packages:
   - `xml2`
   - `httr`
