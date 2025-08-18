@@ -30,7 +30,7 @@ scrape_links <- function(url){ # Function to scrape only the hyperlinks leading 
   
   link_ <- webpage %>%
     rvest::html_nodes("a.resultado-busqueda-link-otro") %>%
-    rvest::html_text("")
+    rvest::html_text()
   return(tibble(reference = link_, url = url_))
 }
 
@@ -129,4 +129,5 @@ for(i in 1:nrow(hits)){
   download.file(hits$xml_url[i], paste0("../files/xml/",hits$reference[i],".xml"), mode="wb", quiet=T)
   download.file(hits$url[i], paste0("../files/html/",hits$reference[i],".html"), mode="wb", quiet=T)
 }
+
 
