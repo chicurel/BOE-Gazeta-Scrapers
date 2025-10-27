@@ -1,5 +1,5 @@
 # Scraping BOE 
-# June 2025
+# October 2025
 
 # Load packages and set working directory  -----------------------------------------------------
 
@@ -95,11 +95,17 @@ hits <- scrape_links(url)
 hits$url <- paste("https://boe.es/", hits$url, sep = "") # Pasting the base url over each individual link 
 hits$reference <- gsub('[Más... (Referencia )]','', hits$reference)
 
-fecha <- read_html(url) %>% html_nodes("h3") %>% html_text()
+fecha <- read_html(url) %>% 
+  html_nodes("p.linea-dem") %>% 
+  html_text()
+
 hits$date <- as.Date(gsub(".*de ", "", fecha),format="%d/%m/%Y")
 
-nombres <- read_html(url) %>% html_nodes("p") %>% html_text()
-hits$title <- nombres[6:(length(nombres)-3)]
+nombres <- read_html(url) %>% 
+  html_nodes("li.resultado-busqueda p:nth-of-type(2)") %>% 
+  html_text()
+
+hits$title <- nombres
 
 hits$pdf_url <- NA 
 hits$xml_url <- NA
@@ -119,7 +125,7 @@ hits <- hits %>%
   relocate(reference, date, title, url, pdf_url, xml_url)
 
 # Save it
-write_csv(hits, "../output/hits_boe.csv")
+write_csv(hits, ".csv")
 
 
 # Download PDF, XML, and HTML files --------------------------------------
@@ -129,5 +135,4 @@ for(i in 1:nrow(hits)){
   download.file(hits$xml_url[i], paste0("../files/xml/",hits$reference[i],".xml"), mode="wb", quiet=T)
   download.file(hits$url[i], paste0("../files/html/",hits$reference[i],".html"), mode="wb", quiet=T)
 }
-
 
